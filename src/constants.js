@@ -1,8 +1,8 @@
 // Database name
-export const DB_NAME = "NavttcProject";
+const DB_NAME = "NavttcProject";
 
 // Mapping of indicators to categories
-export const categoryMap = {
+const categoryMap = {
   "Skilled Workforce": "WorkforceReadiness",
   "International Certification": "WorkforceReadiness",
   "Productive Employment": "WorkforceReadiness",
@@ -14,3 +14,5 @@ export const categoryMap = {
   "Licensing Regime (Assessors)": "QualityAssurance",
   Employability: "WorkforceReadiness",
 };
+
+module.exports = { DB_NAME, categoryMap };

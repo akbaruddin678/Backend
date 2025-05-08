@@ -1,9 +1,9 @@
-import { OutcomeIndicator } from "../models/OutcomeIndicator.js";
-import { ApiError } from "../utils/ApiError.js";
-import { ApiResponse } from "../utils/ApiResponse.js";
+const { OutcomeIndicator } = require("../models/OutcomeIndicator");
+const { ApiError } = require("../utils/ApiError");
+const { ApiResponse } = require("../utils/ApiResponse");
 
 // POST - Create a new outcome
-export const createOutcome = async (req, res, next) => {
+const createOutcome = async (req, res, next) => {
   try {
     const data = req.body;
 
@@ -23,7 +23,7 @@ export const createOutcome = async (req, res, next) => {
 };
 
 // GET all outcomes grouped by category
-export const getOutcomes = async (req, res, next) => {
+const getOutcomes = async (req, res, next) => {
   try {
     const outcomes = await OutcomeIndicator.find();
 
@@ -48,4 +48,9 @@ export const getOutcomes = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+};
+
+module.exports = {
+  createOutcome,
+  getOutcomes,
 };

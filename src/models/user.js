@@ -1,8 +1,8 @@
-import mongoose, { Schema } from "mongoose";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
-const userSchema = new Schema(
+const userSchema = new mongoose.Schema(
   {
     email: {
       type: String,
@@ -24,6 +24,7 @@ const userSchema = new Schema(
   },
   { timestamps: true }
 );
+
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
 
@@ -47,6 +48,7 @@ userSchema.methods.generateAccessToken = function () {
     }
   );
 };
+
 userSchema.methods.generateRefreshToken = function () {
   return jwt.sign(
     {
@@ -58,4 +60,7 @@ userSchema.methods.generateRefreshToken = function () {
     }
   );
 };
-export const User = mongoose.model("User", userSchema);
+
+const User = mongoose.model("User", userSchema);
+console.log(User);
+module.exports = { User };

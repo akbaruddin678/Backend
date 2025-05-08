@@ -1,8 +1,7 @@
-import dotenv from "dotenv";
-dotenv.config();
-import express from "express";
-import cors from "cors";
-import cookieParser from "cookie-parser";
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 
@@ -18,12 +17,12 @@ app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(express.static("public"));
 app.use(cookieParser());
 
-import userRouter from "./routes/user.js";
-import outcomeRouter from "./routes/outcome.js";
+const userRouter = require("./routes/user");
+const outcomeRouter = require("./routes/outcome");
 
 //routes declaration
 app.use("/api/v1/users", userRouter);
-app.use("/api/v1/outcome", outcomeRouter);
+app.use("/api/v1/outcomes", outcomeRouter);
 
 // For Error Handaling
 app.use((err, req, res, next) => {
@@ -39,4 +38,4 @@ app.use((err, req, res, next) => {
   });
 });
 
-export { app };
+module.exports = app;

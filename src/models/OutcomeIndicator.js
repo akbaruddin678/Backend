@@ -1,4 +1,5 @@
-import mongoose, { Schema } from "mongoose";
+const mongoose = require("mongoose");
+const { Schema } = mongoose;
 
 const outcomeSchema = new Schema({
   indicator: String,
@@ -10,7 +11,6 @@ const outcomeSchema = new Schema({
   },
 });
 
-export const OutcomeIndicator = mongoose.model(
-  "OutcomeIndicator",
-  outcomeSchema
-);
+const OutcomeIndicator = mongoose.model("OutcomeIndicator", outcomeSchema);
+
+module.exports = { OutcomeIndicator };
