@@ -11,6 +11,11 @@ app.use(
     credentials: true, // Only enable if you're using cookies/auth headers
   })
 );
+const corsOptions = {
+  origin: "https://serene-gauss.210-56-25-68.plesk.page",
+  optionsSuccessStatus: 200,
+};
+app.use(cors(corsOptions));
 
 app.use(express.json({ limit: "16kb" }));
 app.use(express.urlencoded({ extended: true, limit: "16kb" }));
