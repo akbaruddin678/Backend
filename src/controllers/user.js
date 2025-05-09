@@ -35,7 +35,7 @@ const generateAccessAndRefereshTokens = async (userId) => {
 
 const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-  console.log("Login attempt received for:", email); // Debugging: Track login attempts
+  // console.log("Login attempt received for:", email); // Debugging: Track login attempts
 
   if (!email || !password) {
     console.log("Missing email or password"); // Debugging: Log missing field
@@ -50,7 +50,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
   const isPasswordValid = await user.isPasswordCorrect(password);
   if (!isPasswordValid) {
-    console.log("Invalid password for user:", email); // Debugging: Log invalid password attempt
+    // console.log("Invalid password for user:", email); // Debugging: Log invalid password attempt
     throw new ApiError(401, "Invalid user credentials");
   }
 
@@ -61,7 +61,7 @@ const loginUser = asyncHandler(async (req, res) => {
   const loggedInUser = await User.findById(user._id).select(
     "-password -refreshToken"
   );
-  console.log("Logged-in user:", loggedInUser); // Debugging: Verify the logged-in user's data
+  // console.log("Logged-in user:", loggedInUser); // Debugging: Verify the logged-in user's data
 
   const options = {
     httpOnly: true,
@@ -93,7 +93,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
   const incomingRefreshToken =
     req.cookies.refreshToken || req.body.refreshToken;
 
-  console.log("Incoming refresh token:", incomingRefreshToken); // Debugging: Log incoming refresh token
+  // console.log("Incoming refresh token:", incomingRefreshToken); // Debugging: Log incoming refresh token
 
   if (!incomingRefreshToken) {
     console.log("No refresh token provided"); // Debugging: Log missing refresh token
@@ -105,7 +105,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
       incomingRefreshToken,
       process.env.REFRESH_TOKEN_SECRET
     );
-    console.log("Decoded token:", decodedToken); // Debugging: Log decoded token
+    // console.log("Decoded token:", decodedToken); // Debugging: Log decoded token
 
     const user = await User.findById(decodedToken?._id);
     if (!user) {
@@ -114,7 +114,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
     }
 
     if (incomingRefreshToken !== user?.refreshToken) {
-      console.log("Refresh token mismatch or expired"); // Debugging: Log token mismatch
+      // console.log("Refresh token mismatch or expired"); // Debugging: Log token mismatch
       throw new ApiError(401, "Refresh token is expired or used");
     }
 
@@ -125,7 +125,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
 
     const { accessToken, newRefreshToken } =
       await generateAccessAndRefereshTokens(user._id);
-    console.log("Generated new tokens:", { accessToken, newRefreshToken }); // Debugging: Log new tokens
+    // console.log("Generated new tokens:", { accessToken, newRefreshToken }); // Debugging: Log new tokens
 
     return res
       .status(200)
@@ -139,7 +139,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
         )
       );
   } catch (error) {
-    console.error("Error in refreshing access token:", error); // Debugging: Log error during token refresh
+    // console.error("Error in refreshing access token:", error); // Debugging: Log error during token refresh
     throw new ApiError(401, error?.message || "Invalid refresh token");
   }
 });
