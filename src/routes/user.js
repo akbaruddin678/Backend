@@ -6,9 +6,9 @@ const router = express.Router();
 
 // Login route
 router.route("/login").post(loginUser);
-router.route("/users-getuser").get((req, res) => {
-  res.send({ username: "akbar" });
-});
+// router.route("/users-getuser").get((req, res) => {
+//   res.send({ username: "akbar" });
+// });
 // Secured routes
 // router.route("/logout").post(verifyJWT, logoutUser);
 router.route("/refresh-token").post(refreshAccessToken);
