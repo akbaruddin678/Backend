@@ -22,6 +22,9 @@ const outcomeRouter = require("./routes/outcome");
 
 //routes declaration
 app.use("/api/v1/users", userRouter);
+// app.get("/api/v1/users/users-getuser", (req, res) => {
+//   res.send({ name: "akbar" });
+// });
 app.use("/api/v1/outcomes", outcomeRouter);
 
 // For Error Handaling
