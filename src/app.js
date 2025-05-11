@@ -5,12 +5,7 @@ const cookieParser = require("cookie-parser");
 
 const app = express();
 
-app.use(
-  cors({
-    origin: process.env.CORS_ORIGIN,
-    credentials: true, // Only enable if you're using cookies/auth headers
-  })
-);
+app.use(cors());
 // const corsOptions = {
 //   origin: "https://serene-gauss.210-56-25-68.plesk.page",
 //   optionsSuccessStatus: 200,
