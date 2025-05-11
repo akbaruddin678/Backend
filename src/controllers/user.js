@@ -54,39 +54,41 @@ const loginUser = asyncHandler(async (req, res) => {
     throw new ApiError(401, "Invalid user credentials");
   }
 
-  const { accessToken, refreshToken } = await generateAccessAndRefereshTokens(
-    user._id
-  );
+  // const { accessToken, refreshToken } = await generateAccessAndRefereshTokens(
+  //   user._id
+  // );
 
   const loggedInUser = await User.findById(user._id).select(
     "-password -refreshToken"
   );
-  // console.log("Logged-in user:", loggedInUser); // Debugging: Verify the logged-in user's data
+  console.log("Logged-in user:", loggedInUser); // Debugging: Verify the logged-in user's data
 
-  const options = {
-    httpOnly: true,
-    secure: true,
-  };
+  // const options = {
+  //   httpOnly: true,
+  //   secure: true,
+  // };
 
-  return res
-    .status(200)
-    .cookie("accessToken", accessToken, options)
-    .cookie("refreshToken", refreshToken, options)
-    .json(
-      new ApiResponse(
-        200,
-        {
-          user: {
-            _id: loggedInUser._id,
-            email: loggedInUser.email,
-            role: loggedInUser.role,
+  return (
+    res
+      .status(200)
+      // .cookie("accessToken", accessToken, options)
+      // .cookie("refreshToken", refreshToken, options)
+      .json(
+        new ApiResponse(
+          200,
+          {
+            user: {
+              _id: loggedInUser._id,
+              email: loggedInUser.email,
+              role: loggedInUser.role,
+            },
+            // accessToken,
+            // refreshToken,
           },
-          accessToken,
-          refreshToken,
-        },
-        "User logged In Successfully"
+          "User logged In Successfully"
+        )
       )
-    );
+  );
 });
 
 const refreshAccessToken = asyncHandler(async (req, res) => {
