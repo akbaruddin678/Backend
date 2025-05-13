@@ -8,24 +8,24 @@ const mongoose = require("mongoose");
 
 const generateAccessAndRefereshTokens = async (userId) => {
   try {
-    console.log("Generating tokens for userId:", userId); // Debugging: Track userId being processed
+    // console.log("Generating tokens for userId:", userId); // Debugging: Track userId being processed
     const user = await User.findById(userId);
     if (!user) {
-      console.log("User not found"); // Debugging: Check if user is found
+      // console.log("User not found"); // Debugging: Check if user is found
       throw new ApiError(404, "User not found");
     }
 
     const accessToken = user.generateAccessToken();
     const refreshToken = user.generateRefreshToken();
 
-    console.log("Generated tokens:", { accessToken, refreshToken }); // Debugging: Check generated tokens
+    // console.log("Generated tokens:", { accessToken, refreshToken }); // Debugging: Check generated tokens
 
     user.refreshToken = refreshToken;
     await user.save({ validateBeforeSave: false });
 
     return { accessToken, refreshToken };
   } catch (error) {
-    console.error("Error in generating tokens:", error); // Debugging: Log error
+    // console.error("Error in generating tokens:", error); // Debugging: Log error
     throw new ApiError(
       500,
       "Something went wrong while generating refresh and access token"
@@ -38,13 +38,13 @@ const loginUser = asyncHandler(async (req, res) => {
   // console.log("Login attempt received for:", email); // Debugging: Track login attempts
 
   if (!email || !password) {
-    console.log("Missing email or password"); // Debugging: Log missing field
+    // console.log("Missing email or password"); // Debugging: Log missing field
     throw new ApiError(400, "Email and password are required");
   }
 
   const user = await User.findOne({ $or: [{ email }] });
   if (!user) {
-    console.log("User not found for email:", email); // Debugging: Log user not found
+    // console.log("User not found for email:", email); // Debugging: Log user not found
     throw new ApiError(404, "User does not exist");
   }
 
@@ -61,7 +61,7 @@ const loginUser = asyncHandler(async (req, res) => {
   const loggedInUser = await User.findById(user._id).select(
     "-password -refreshToken"
   );
-  console.log("Logged-in user:", loggedInUser); // Debugging: Verify the logged-in user's data
+  // console.log("Logged-in user:", loggedInUser); // Debugging: Verify the logged-in user's data
 
   // const options = {
   //   httpOnly: true,
@@ -111,7 +111,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
 
     const user = await User.findById(decodedToken?._id);
     if (!user) {
-      console.log("User not found for refresh token"); // Debugging: Log user not found for refresh token
+      // console.log("User not found for refresh token"); // Debugging: Log user not found for refresh token
       throw new ApiError(401, "Invalid refresh token");
     }
 

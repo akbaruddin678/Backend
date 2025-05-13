@@ -19,15 +19,13 @@ app.use(cookieParser());
 
 const userRouter = require("./routes/user");
 const outcomeRouter = require("./routes/outcome");
+const skilledWorker = require("./routes/skilledWorker");
 
-//routes declaration
 app.use("/api/v1/users", userRouter);
-// app.get("/api/v1/users/users-getuser", (req, res) => {
-//   res.send({ name: "akbar" });
-// });
-app.use("/api/v1/outcomes", outcomeRouter);
 
-// For Error Handaling
+app.use("/api/v1/outcomes", outcomeRouter);
+app.use("/api/v1/skilledworker", skilledWorker);
+
 app.use((err, req, res, next) => {
   console.error(err);
 
